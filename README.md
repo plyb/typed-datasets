@@ -23,15 +23,13 @@ uv add git+https://github.com/Plyb/typed-datasets.git
 
 ```python
 from typing import TypedDict
-from typed_datasets import TypedDataset
-import datasets
+from typed_datasets import load_typed
 
 class Row(TypedDict):
     text: str
     label: int
 
-raw = datasets.load_dataset("imdb", split="train")
-ds: TypedDataset[Row] = TypedDataset(raw)
+ds = load_typed("imdb", row_type=Row, split="train")
 
 for row in ds.take(5):
     print(row["text"], row["label"])  # types known statically
